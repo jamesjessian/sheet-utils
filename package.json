@@ -1,0 +1,21 @@
+{
+	"name": "@jamesjessian/sheet-utils",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/jamesjessian/sheet-utils.git"
+	},
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com/jamesjessian"
+	},
+	"scripts": {},
+	"keywords": [],
+	"author": "",
+	"license": "UNLICENSED",
+	"dependencies": {
+		"find-up": "^7.0.0",
+		"googleapis": "^134.0.0"
+	}
+}
