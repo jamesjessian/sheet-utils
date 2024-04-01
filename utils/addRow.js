@@ -2,7 +2,7 @@
 
 const { initialiseGoogleSheet, getHeadingsRow, getColumn, writeRow } = require('./internal')
 
-async function addRowToSpreadsheet(spreadsheetId, sheetName, rowData, rowIndex = null) {
+async function addRow(spreadsheetId, sheetName, rowData, rowIndex = null) {
 	await initialiseGoogleSheet(spreadsheetId, sheetName)
 
 	const headingsRow = await getHeadingsRow()
@@ -19,4 +19,4 @@ async function addRowToSpreadsheet(spreadsheetId, sheetName, rowData, rowIndex =
 	await writeRow(dataForRow, _rowIndex)
 }
 
-module.exports = addRowToSpreadsheet
+module.exports = addRow

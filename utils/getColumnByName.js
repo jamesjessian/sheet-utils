@@ -1,6 +1,6 @@
 const { getColumn, initialiseGoogleSheet, getHeadingsRow } = require('./internal')
 
-async function getColumnByNameFromSpreadsheet(spreadsheetId, sheetName, columnName) {
+async function getColumnByName(spreadsheetId, sheetName, columnName) {
 	await initialiseGoogleSheet(spreadsheetId, sheetName)
 
 	const headingsRow = await getHeadingsRow()
@@ -14,4 +14,4 @@ async function getColumnByNameFromSpreadsheet(spreadsheetId, sheetName, columnNa
 	return getColumn(colIndex)
 }
 
-module.exports = getColumnByNameFromSpreadsheet
+module.exports = getColumnByName

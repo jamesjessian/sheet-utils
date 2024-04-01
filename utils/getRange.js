@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 
-const { initialiseGoogleSheet, getHeadingsRow, getRange } = require('./internal')
+const { initialiseGoogleSheet, getHeadingsRow, getRange: getRangeInternal } = require('./internal')
 
-async function getRangeFromSpreadsheet(
+async function getRange(
 	spreadsheetId,
 	sheetName = 'Sheet1',
 	startRow = 1,
@@ -14,7 +14,7 @@ async function getRangeFromSpreadsheet(
 
 	const headingsRow = await getHeadingsRow()
 
-	const allData = await getRange(startRow + 1, startColumn, endRow + 1, endColumn)
+	const allData = await getRangeInternal(startRow + 1, startColumn, endRow + 1, endColumn)
 
 	return allData.map(row => {
 		const obj = {}
@@ -25,4 +25,4 @@ async function getRangeFromSpreadsheet(
 	})
 }
 
-module.exports = getRangeFromSpreadsheet
+module.exports = getRange
