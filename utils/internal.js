@@ -49,6 +49,7 @@ async function initialiseGoogleSheet(spreadsheetId, worksheetName = 'Sheet1') {
 
 	globals.spreadsheetId = spreadsheetId
 	globals.worksheetName = worksheetName
+	globals.headings = await getRow(0)
 }
 
 function getRow(index) {
@@ -84,7 +85,7 @@ function getColLetter(index) {
 }
 
 function getHeadingsRow() {
-	return getRow(0)
+	return globals.headings
 }
 
 function getColumn(index) {

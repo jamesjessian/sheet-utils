@@ -2,14 +2,10 @@
 
 const { initialiseGoogleSheet, getHeadingsRow, getColumn, writeRow } = require('./internal')
 
-const cache = {}
-
-async function addRowToSpreadsheet(spreadsheetId, rowData, sheetName = 'Sheet1', rowIndex = null) {
+async function addRowToSpreadsheet(spreadsheetId, sheetName, rowData, rowIndex = null) {
 	await initialiseGoogleSheet(spreadsheetId, sheetName)
 
-	// Get headings row
-	const headingsRow = cache[spreadsheetId] || (await getHeadingsRow(spreadsheetId))
-	cache[spreadsheetId] = headingsRow
+	const headingsRow = await getHeadingsRow()
 
 	const dataForRow = []
 	Object.keys(rowData).forEach(key => {
@@ -22,3 +18,5 @@ async function addRowToSpreadsheet(spreadsheetId, rowData, sheetName = 'Sheet1',
 	}
 	await writeRow(dataForRow, _rowIndex)
 }
+
+module.exports = addRowToSpreadsheet
