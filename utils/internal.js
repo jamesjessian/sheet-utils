@@ -112,8 +112,9 @@ function writeRow(values, rowIndex) {
 	return globals.api.spreadsheets.values
 		.update({ spreadsheetId, range, valueInputOption, resource })
 		.then(result => {
+			console.log('result', result)
 			const cellsUpdated = (result.data || {}).updatedCells
-			console.log(`${cellsUpdated} Google Sheet cells updated in ${spreadsheetId}`)
+			console.log(`${cellsUpdated} cells updated in Google Sheet ${spreadsheetId}`)
 			return cellsUpdated
 		})
 		.catch(err => {
