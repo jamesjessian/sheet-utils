@@ -11,7 +11,12 @@ async function getColumnByName(spreadsheetId, sheetName, columnName) {
 		return []
 	}
 
-	return getColumn(colIndex)
+	const column = await getColumn(colIndex)
+
+	// Remove the first item from the column, as that will be the heading
+	column.shift()
+
+	return column
 }
 
 module.exports = getColumnByName
