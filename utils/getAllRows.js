@@ -19,7 +19,6 @@ async function getAllRows(spreadsheetId, sheetName) {
 		return obj
 	})
 
-	console.log('rows', rows)
 	return rows
 }
 
