@@ -25,7 +25,21 @@ async function initialiseGoogleSheet(spreadsheetId, worksheetName = 'Sheet1') {
 		const type = process.env.GOOGLE_SERVICE_ACCOUNT_TYPE
 		const project_id = process.env.GOOGLE_SERVICE_ACCOUNT_PROJECT_ID
 		const private_key_id = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY_ID
+		console.log('process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY', process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY)
 		const private_key = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY.split(String.raw`\n`).join('\n')
+		console.log(
+			`process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY.includes('\\n')`,
+			process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY.includes('\\n')
+		)
+		console.log(
+			`process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY.includes('\n')`,
+			process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY.includes('\n')
+		)
+		console.log(
+			'process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY.includes(String.raw`\n`)',
+			process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY.includes(String.raw`\n`)
+		)
+		console.log('private_key', private_key)
 		const client_email = process.env.GOOGLE_SERVICE_ACCOUNT_CLIENT_EMAIL
 		const client_id = process.env.GOOGLE_SERVICE_ACCOUNT_CLIENT_ID
 		const auth_uri = process.env.GOOGLE_SERVICE_ACCOUNT_AUTH_URI
