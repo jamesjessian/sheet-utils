@@ -18,25 +18,42 @@ async function initialiseGoogleSheet(spreadsheetId, worksheetName = 'Sheet1') {
 		return
 	}
 
-	// Find the Google APIs service account key in the root directory of the project
-	// The root directory is the one containing the package.json file or the one where the script is run from
-	const f = await findUpModule
-	const packageJsonPath = f.findUpSync('package.json')
-	const rootDir = packageJsonPath ? path.dirname(packageJsonPath) : process.cwd()
-	const serviceAccountKey = path.join(rootDir, 'google-service-account-key.json')
-
-	if (!fs.existsSync(serviceAccountKey)) {
-		console.error('Service account key not found at', serviceAccountKey)
-		throw new Error('Service account key not found')
-	}
-
 	let serviceAccount
 
-	try {
-		serviceAccount = JSON.parse(fs.readFileSync(serviceAccountKey, 'utf8'))
-	} catch (error) {
-		console.log('Error reading service account key at', serviceAccountKey)
-		throw new Error('Service account key invalid')
+	// If we have Google Service Account credentials in the environment variables, use these for authentication
+	if (process.env.GOOGLE_SERVICE_ACCOUNT_TYPE) {
+		const type = process.env.GOOGLE_SERVICE_ACCOUNT_TYPE
+		const project_id = process.env.GOOGLE_SERVICE_ACCOUNT_PROJECT_ID
+		const private_key_id = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY_ID
+		const private_key = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY
+		const client_email = process.env.GOOGLE_SERVICE_ACCOUNT_CLIENT_EMAIL
+		const client_id = process.env.GOOGLE_SERVICE_ACCOUNT_CLIENT_ID
+		const auth_uri = process.env.GOOGLE_SERVICE_ACCOUNT_AUTH_URI
+		const token_uri = process.env.GOOGLE_SERVICE_ACCOUNT_TOKEN_URI
+		const auth_provider_x509_cert_url = process.env.GOOGLE_SERVICE_ACCOUNT_AUTH_PROVIDER_X509_CERT_URL
+		const client_x509_cert_url = process.env.GOOGLE_SERVICE_ACCOUNT_CLIENT_X509_CERT_URL
+
+		// prettier-ignore
+		serviceAccount = { type, project_id, private_key_id, private_key, client_email, client_id, auth_uri, token_uri, auth_provider_x509_cert_url, client_x509_cert_url, }
+	} else {
+		// Find the Google APIs service account key in the root directory of the project
+		// The root directory is the one containing the package.json file or the one where the script is run from
+		const f = await findUpModule
+		const packageJsonPath = f.findUpSync('package.json')
+		const rootDir = packageJsonPath ? path.dirname(packageJsonPath) : process.cwd()
+		const serviceAccountKey = path.join(rootDir, 'google-service-account-key.json')
+
+		if (!fs.existsSync(serviceAccountKey)) {
+			console.error('Service account key not found at', serviceAccountKey)
+			throw new Error('Service account key not found')
+		}
+
+		try {
+			serviceAccount = JSON.parse(fs.readFileSync(serviceAccountKey, 'utf8'))
+		} catch (error) {
+			console.log('Error reading service account key at', serviceAccountKey)
+			throw new Error('Service account key invalid')
+		}
 	}
 
 	const { client_email, private_key } = serviceAccount
